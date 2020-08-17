@@ -11,13 +11,6 @@ cc_library_static {
 }
 
 prebuilt_etc {
-    name: "fstab.default",
-    src: "fstab.default",
-    vendor: true,
-    vendor_ramdisk_available: true,
-}
-
-prebuilt_etc {
     name: "init.oplus.hw.rc",
     src: "init.oplus.hw.rc",
     sub_dir: "init",
@@ -44,13 +37,6 @@ prebuilt_etc {
     src: "init.qcom.recovery.rc",
     sub_dir: "init",
     recovery: true,
-}
-
-prebuilt_etc {
-    name: "init.target.rc",
-    src: "init.target.rc",
-    sub_dir: "init/hw",
-    vendor: true,
 }
 
 prebuilt_etc {
