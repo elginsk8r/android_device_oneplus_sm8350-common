@@ -65,10 +65,10 @@ TARGET_BOOTLOADER_BOARD_NAME := $(DEVICE_SKU)
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth/include
 
 # Properties
-TARGET_ODM_PROP += $(COMMON_PATH)/odm.prop
-TARGET_PRODUCT_PROP += $(COMMON_PATH)/product.prop
-TARGET_SYSTEM_EXT_PROP += $(COMMON_PATH)/system_ext.prop
-TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
+TARGET_ODM_PROP += $(COMMON_PATH)/$(DEVICE_SKU)/odm.prop
+TARGET_PRODUCT_PROP += $(COMMON_PATH)/$(DEVICE_SKU)/product.prop
+TARGET_SYSTEM_EXT_PROP += $(COMMON_PATH)/$(DEVICE_SKU)/system_ext.prop
+TARGET_VENDOR_PROP += $(COMMON_PATH)/$(DEVICE_SKU)/vendor.prop
 
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
@@ -120,9 +120,13 @@ TARGET_KERNEL_NO_GCC := true
 
 # Kernel modules
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(COMMON_PATH)/modules.blocklist
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/modules.load.recovery))
+ifneq ($(wildcard $(COMMON_PATH)/$(DEVICE_SKU)/modules.load),)
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/$(DEVICE_SKU)/modules.load))
+endif
+ifneq ($(wildcard $(COMMON_PATH)/$(DEVICE_SKU)/modules.load.recovery),)
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/$(DEVICE_SKU)/modules.load.recovery))
 BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)
+endif
 TARGET_MODULE_ALIASES += wlan.ko:qca_cld3_wlan.ko
 
 # Platform

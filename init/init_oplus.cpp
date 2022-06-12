@@ -36,6 +36,11 @@ void vendor_load_properties() {
     auto device = GetProperty("ro.product.product.device", "");
     auto rf_version = std::stoi(GetProperty("ro.boot.rf_version", "0"));
 
+    if (device == "OnePlusN200") {
+        OverrideProperty("ro.product.product.model", rf_version == 12 ? "DE2118" : "DE2117");
+        return;
+    }
+
     switch (rf_version) {
         case 11: // CN
             if (device == "OnePlus9") {
